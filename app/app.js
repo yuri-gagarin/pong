@@ -1,3 +1,29 @@
+class Vector {
+  constructor(x = 0, y = 0) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+class Rectangle {
+  constructor(width, height) {
+    this.position = new Vector;
+    this.size = new Vector(width, height);
+  }
+}
+
+class Ball extends Rectangle {
+  constructor() {
+    super(10, 10);
+    this.velocity = new Vector;
+  }
+}
+
+const ball = new Ball;
+console.log(ball);
+ball.position.x = 100;
+ball.position.y = 50;
+
 const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
@@ -6,4 +32,4 @@ context.fillRect(0, 0, canvas.width, canvas.height);
 
 
 context.fillStyle = "#fff";
-context.fillRect(20, 20, 10, 10);
+context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
