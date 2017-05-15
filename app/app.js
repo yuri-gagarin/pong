@@ -19,17 +19,39 @@ class Ball extends Rectangle {
   }
 }
 
-const ball = new Ball;
-console.log(ball);
-ball.position.x = 100;
-ball.position.y = 50;
-
 const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
-context.fillStyle = "#000";
-context.fillRect(0, 0, canvas.width, canvas.height);
+const ball = new Ball;
+ball.velocity.x = 5;
+ball.velocity.y = 5;
+
+let lastRefresh = 1000;
+
+function callback(miliseconds) {
+  if (lastRefresh) {
+    updateGame((miliseconds - lastRefresh) / 1000)
+  }
+  lastTime = miliseconds;
+  requestAnimationFrame(callback);
+}
 
 
-context.fillStyle = "#fff";
-context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
+function updateGame(time) {
+  ball.position.x += ball.velocity.x * time;
+  ball.position.y += ball.velocity.y * time;
+
+
+  context.fillStyle = "#000";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+
+  context.fillStyle = "#fff";
+  context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
+  console.log("hi")
+
+}
+
+callback(20);
+
+console.log(ball);
