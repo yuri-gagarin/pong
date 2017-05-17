@@ -23,16 +23,16 @@ const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
 const ball = new Ball;
-ball.velocity.x = 5;
-ball.velocity.y = 5;
+ball.velocity.x = 50;
+ball.velocity.y = 50;
 
-let lastRefresh = 1000;
+let lastRefresh;
 
 function callback(miliseconds) {
   if (lastRefresh) {
     updateGame((miliseconds - lastRefresh) / 1000)
   }
-  lastTime = miliseconds;
+  lastRefresh = miliseconds;
   requestAnimationFrame(callback);
 }
 
@@ -52,6 +52,6 @@ function updateGame(time) {
 
 }
 
-callback(20);
+callback();
 
 console.log(ball);
