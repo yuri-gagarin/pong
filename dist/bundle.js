@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,13 +73,17 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Vector = function Vector() {
+var Vector = exports.Vector = function Vector() {
   var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
@@ -89,14 +93,14 @@ var Vector = function Vector() {
   this.y = y;
 };
 
-var Rectangle = function Rectangle(width, height) {
+var Rectangle = exports.Rectangle = function Rectangle(width, height) {
   _classCallCheck(this, Rectangle);
 
   this.position = new Vector();
   this.size = new Vector(width, height);
 };
 
-var Ball = function (_Rectangle) {
+var Ball = exports.Ball = function (_Rectangle) {
   _inherits(Ball, _Rectangle);
 
   function Ball() {
@@ -111,18 +115,27 @@ var Ball = function (_Rectangle) {
   return Ball;
 }(Rectangle);
 
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _pongResources = __webpack_require__(0);
+
 var canvas = document.getElementById("pong");
 var context = canvas.getContext('2d');
 
-var ball = new Ball();
-ball.velocity.x = 50;
-ball.velocity.y = 50;
-
-var lastRefresh = void 0;
+var ball = new _pongResources.Ball();
+ball.velocity.x = 15;
+ball.velocity.y = 150;
+ball.position.x = 20;
+var lastTime = void 0;
 
 function callback(miliseconds) {
-  if (lastRefresh) {
-    updateGame((miliseconds - lastRefresh) / 1000);
+  if (lastTime) {
+    updateGame((miliseconds - lastTime) / 1000);
   }
   lastTime = miliseconds;
   requestAnimationFrame(callback);
@@ -130,16 +143,28 @@ function callback(miliseconds) {
 
 function updateGame(time) {
   ball.position.x += ball.velocity.x * time;
-  ball.poistion.y += ball.velocity.y * time;
+  ball.position.y += ball.velocity.y * time;
+
+  if (ball.position.x < 0 || ball.position.x > canvas.width) {
+    ball.velocity.x = -ball.velocity.x;
+  }
+
+  if (ball.position.y < 0 || ball.position.y > canvas.height) {
+    ball.velocity.y = -ball.velocity.y;
+  }
 
   context.fillStyle = "#000";
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   context.fillStyle = "#fff";
   context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
+  //console.log("x is", ball.position.x);
+  if (ball.position.y < 0 || ball.position.y > 400) {
+    console.log("y is", ball.position.y);
+  }
 }
 
-callback(1000);
+callback();
 
 console.log(ball);
 

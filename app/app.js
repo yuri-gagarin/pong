@@ -1,38 +1,20 @@
-class Vector {
-  constructor(x = 0, y = 0) {
-    this.x = x;
-    this.y = y;
-  }
-}
+import {Vector, Rectangle, Ball} from "./resources/pongResources";
 
-class Rectangle {
-  constructor(width, height) {
-    this.position = new Vector;
-    this.size = new Vector(width, height);
-  }
-}
-
-class Ball extends Rectangle {
-  constructor() {
-    super(10, 10);
-    this.velocity = new Vector;
-  }
-}
 
 const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
 const ball = new Ball;
-ball.velocity.x = 50;
-ball.velocity.y = 50;
-
-let lastRefresh;
+ball.velocity.x = 15;
+ball.velocity.y = 150;
+ball.position.x = 20;
+let lastTime;
 
 function callback(miliseconds) {
-  if (lastRefresh) {
-    updateGame((miliseconds - lastRefresh) / 1000)
+  if (lastTime) {
+    updateGame((miliseconds - lastTime) / 1000)
   }
-  lastRefresh = miliseconds;
+  lastTime = miliseconds;
   requestAnimationFrame(callback);
 }
 
@@ -41,6 +23,15 @@ function updateGame(time) {
   ball.position.x += ball.velocity.x * time;
   ball.position.y += ball.velocity.y * time;
 
+  if (ball.position.x < 0 || ball.position.x > canvas.width) {
+    ball.velocity.x = -ball.velocity.x;
+  }
+
+  if (ball.position.y < 0 || ball.position.y > canvas.height) {
+    ball.velocity.y = -ball.velocity.y;
+  }
+
+
 
   context.fillStyle = "#000";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -48,8 +39,10 @@ function updateGame(time) {
 
   context.fillStyle = "#fff";
   context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
-  console.log("hi")
-
+  //console.log("x is", ball.position.x);
+  if (ball.position.y < 0 || ball.position.y > 400) {
+    console.log("y is", ball.position.y);
+  }
 }
 
 callback();
