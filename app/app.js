@@ -4,47 +4,96 @@ import {Vector, Rectangle, Ball} from "./resources/pongResources";
 const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
-const ball = new Ball;
-ball.velocity.x = 15;
-ball.velocity.y = 150;
-ball.position.x = 20;
-let lastTime;
 
-function callback(miliseconds) {
-  if (lastTime) {
-    updateGame((miliseconds - lastTime) / 1000)
+
+class Player extends  Rectangle {
+
+  constructor(score) {
+    super(10, 60);
+    this.score = score;
   }
-  lastTime = miliseconds;
-  requestAnimationFrame(callback);
+
 }
 
+class Pong {
 
-function updateGame(time) {
-  ball.position.x += ball.velocity.x * time;
-  ball.position.y += ball.velocity.y * time;
+  constructor(canvas) {
 
-  if (ball.position.x < 0 || ball.position.x > canvas.width) {
-    ball.velocity.x = -ball.velocity.x;
+    this.canvas = canvas;
+    this.context = context;
+
+    this.players = [new Player, new Player];
+
+    this.ball = new Ball;
+
+    this.ball.position.x = 200;
+    this.ball.position.y = 200;
+
+    this.ball.velocity.x = 75;
+    this.ball.velocity.y = 75;
+
+    let lastTime;
+
+    const callback = (miliseconds) => {
+
+      if (lastTime) {
+        this.updateGame((miliseconds - lastTime) / 1000)
+      }
+      lastTime = miliseconds;
+
+      //rerenders assets at 60fps
+      requestAnimationFrame(callback);
+    };
+
+    callback();
+
   }
 
-  if (ball.position.y < 0 || ball.position.y > canvas.height) {
-    ball.velocity.y = -ball.velocity.y;
+  renderModel(model) {
+    // renders a game model, ball and paddle
+
+    this.context.fillStyle = "#fff";
+    this.context.fillRect(model.position.x, model.position.y, model.size.x, model.size.y);
+
   }
 
+  renderGame() {
+    // renders the playing field and the ball model
+
+    this.context.fillStyle = "#000";
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.renderModel(this.ball);
+
+    //renders the player paddles
+    this.players.forEach((paddle) => {
+      this.renderModel(paddle);
+    });
 
 
-  context.fillStyle = "#000";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  }
 
+  updateGame(time) {
 
-  context.fillStyle = "#fff";
-  context.fillRect(ball.position.x, ball.position.y, ball.size.x, ball.size.y);
-  //console.log("x is", ball.position.x);
-  if (ball.position.y < 0 || ball.position.y > 400) {
-    console.log("y is", ball.position.y);
+    this.ball.position.x += this.ball.velocity.x * time;
+    this.ball.position.y += this.ball.velocity.y * time;
+
+    if (this.ball.position.x < 0 || this.ball.position.x > this.canvas.width) {
+      this.ball.velocity.x = -this.ball.velocity.x;
+    }
+
+    if (this.ball.position.y < 0 || this.ball.position.y > this.canvas.height) {
+      this.ball.velocity.y = -this.ball.velocity.y;
+    }
+
+    //console.log("x is", ball.position.x);
+    if (this.ball.position.y < 0 || this.ball.position.y > 400) {
+      console.log("y is", this.ball.position.y);
+    }
+
+    this.renderGame();
+
   }
 }
 
-callback();
-
-console.log(ball);
+const newGame  = new Pong(canvas);
