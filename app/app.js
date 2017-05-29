@@ -22,7 +22,15 @@ class Pong {
     this.canvas = canvas;
     this.context = context;
 
+
+    //two player paddles
     this.players = [new Player, new Player];
+
+    this.players[0].position.x = 10;
+    this.players[0].position.y  = this.canvas.height / 2;
+
+    this.players[1].position.x = this.canvas.width - 10;
+    this.players[1].position.y = this.canvas.height / 2;
 
     this.ball = new Ball;
 
@@ -54,7 +62,7 @@ class Pong {
     // renders a game model, ball and paddle
 
     this.context.fillStyle = "#fff";
-    this.context.fillRect(model.position.x, model.position.y, model.size.x, model.size.y);
+    this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
 
   }
 
@@ -90,6 +98,9 @@ class Pong {
     if (this.ball.position.y < 0 || this.ball.position.y > 400) {
       console.log("y is", this.ball.position.y);
     }
+
+    this.players[0].position.y = this.ball.position.y;
+    this.players[1].position.y = this.ball.position.y;
 
     this.renderGame();
 
