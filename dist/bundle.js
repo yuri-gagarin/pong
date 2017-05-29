@@ -233,6 +233,13 @@ var Pong = function () {
       this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
     }
   }, {
+    key: "collideWithPaddle",
+    value: function collideWithPaddle(paddle, ball) {
+      if (paddle.leftEnd < ball.rightEnd && paddle.rightEnd > ball.leftEnd && paddle.topEnd < ball.bottomEnd && paddle.bottomEnd > ball.topEnd) {
+        ball.velocity.x = -ball.velocity.x;
+      }
+    }
+  }, {
     key: "renderGame",
     value: function renderGame() {
       var _this3 = this;
@@ -252,6 +259,7 @@ var Pong = function () {
   }, {
     key: "updateGame",
     value: function updateGame(time) {
+      var _this4 = this;
 
       this.ball.position.x += this.ball.velocity.x * time;
       this.ball.position.y += this.ball.velocity.y * time;
@@ -268,9 +276,11 @@ var Pong = function () {
         console.log("y is", this.ball.position.y);
       }
 
-      this.players[0].position.y = this.ball.position.y;
       this.players[1].position.y = this.ball.position.y;
 
+      this.players.forEach(function (player) {
+        _this4.collideWithPaddle(player, _this4.ball);
+      });
       this.renderGame();
     }
   }]);
@@ -278,7 +288,11 @@ var Pong = function () {
   return Pong;
 }();
 
-var newGame = new Pong(canvas);
+var game = new Pong(canvas);
+
+canvas.addEventListener('mousemove', function (event) {
+  game.players[0].position.y = event.offsetY;
+});
 
 /***/ })
 /******/ ]);

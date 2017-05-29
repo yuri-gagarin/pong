@@ -46,7 +46,7 @@ class Pong {
     const callback = (miliseconds) => {
 
       if (lastTime) {
-        this.updateGame((miliseconds - lastTime) / 1000)
+        this.updateGame((miliseconds - lastTime) / 1000);
       }
       lastTime = miliseconds;
 
@@ -64,6 +64,13 @@ class Pong {
     this.context.fillStyle = "#fff";
     this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
 
+  }
+
+  collideWithPaddle(paddle, ball) {
+    if (paddle.leftEnd < ball.rightEnd && paddle.rightEnd > ball.leftEnd
+        && paddle.topEnd < ball.bottomEnd && paddle.bottomEnd > ball.topEnd) {
+          ball.velocity.x = -ball.velocity.x;
+        }
   }
 
   renderGame() {
@@ -99,12 +106,18 @@ class Pong {
       console.log("y is", this.ball.position.y);
     }
 
-    this.players[0].position.y = this.ball.position.y;
     this.players[1].position.y = this.ball.position.y;
 
+    this.players.forEach(player => {
+      this.collideWithPaddle(player, this.ball);
+    });
     this.renderGame();
 
   }
 }
 
-const newGame  = new Pong(canvas);
+const game  = new Pong(canvas);
+
+canvas.addEventListener('mousemove', event => {
+  game.players[0].position.y = event.offsetY;
+});
