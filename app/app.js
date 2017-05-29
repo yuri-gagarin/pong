@@ -34,6 +34,7 @@ class Pong {
 
     let lastTime;
 
+    //animate the game
     const callback = (miliseconds) => {
 
       if (lastTime) {
@@ -78,15 +79,14 @@ class Pong {
     this.ball.position.x += this.ball.velocity.x * time;
     this.ball.position.y += this.ball.velocity.y * time;
 
-    if (this.ball.position.x < 0 || this.ball.position.x > this.canvas.width) {
+    if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
       this.ball.velocity.x = -this.ball.velocity.x;
     }
 
-    if (this.ball.position.y < 0 || this.ball.position.y > this.canvas.height) {
+    if (this.ball.topEnd < 0 || this.ball.bottomEnd > this.canvas.height) {
       this.ball.velocity.y = -this.ball.velocity.y;
     }
 
-    //console.log("x is", ball.position.x);
     if (this.ball.position.y < 0 || this.ball.position.y > 400) {
       console.log("y is", this.ball.position.y);
     }

@@ -77,6 +77,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -93,12 +95,41 @@ var Vector = exports.Vector = function Vector() {
   this.y = y;
 };
 
-var Rectangle = exports.Rectangle = function Rectangle(width, height) {
-  _classCallCheck(this, Rectangle);
+var Rectangle = exports.Rectangle = function () {
+  function Rectangle(width, height) {
+    _classCallCheck(this, Rectangle);
 
-  this.position = new Vector();
-  this.size = new Vector(width, height);
-};
+    this.position = new Vector();
+    this.size = new Vector(width, height);
+  }
+
+  //helpers to easily get the edges of models
+
+
+  _createClass(Rectangle, [{
+    key: "leftEnd",
+    get: function get() {
+      return this.position.x - this.size.x / 2;
+    }
+  }, {
+    key: "rightEnd",
+    get: function get() {
+      return this.position.x + this.size.x / 2;
+    }
+  }, {
+    key: "topEnd",
+    get: function get() {
+      return this.position.y - this.size.y / 2;
+    }
+  }, {
+    key: "bottomEnd",
+    get: function get() {
+      return this.position.y + this.size.y / 2;
+    }
+  }]);
+
+  return Rectangle;
+}();
 
 var Ball = exports.Ball = function (_Rectangle) {
   _inherits(Ball, _Rectangle);
@@ -171,6 +202,7 @@ var Pong = function () {
 
     var lastTime = void 0;
 
+    //animate the game
     var callback = function callback(miliseconds) {
 
       if (lastTime) {
@@ -217,15 +249,14 @@ var Pong = function () {
       this.ball.position.x += this.ball.velocity.x * time;
       this.ball.position.y += this.ball.velocity.y * time;
 
-      if (this.ball.position.x < 0 || this.ball.position.x > this.canvas.width) {
+      if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
         this.ball.velocity.x = -this.ball.velocity.x;
       }
 
-      if (this.ball.position.y < 0 || this.ball.position.y > this.canvas.height) {
+      if (this.ball.topEnd < 0 || this.ball.bottomEnd > this.canvas.height) {
         this.ball.velocity.y = -this.ball.velocity.y;
       }
 
-      //console.log("x is", ball.position.x);
       if (this.ball.position.y < 0 || this.ball.position.y > 400) {
         console.log("y is", this.ball.position.y);
       }
