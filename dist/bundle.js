@@ -10931,6 +10931,8 @@ var Player = function (_Rectangle) {
   return Player;
 }(_pongResources.Rectangle);
 
+var paused = false;
+
 var Pong = function () {
   function Pong(canvas) {
     var _this2 = this;
@@ -10961,6 +10963,9 @@ var Pong = function () {
 
     //animate the game
     var callback = function callback(miliseconds) {
+      if (paused) {
+        return;
+      }
 
       if (lastTime) {
         _this2.updateGame((miliseconds - lastTime) / 1000);
@@ -10972,6 +10977,8 @@ var Pong = function () {
     };
 
     callback();
+
+    this.animate = callback;
   }
 
   _createClass(Pong, [{
@@ -11038,10 +11045,69 @@ var Pong = function () {
   return Pong;
 }();
 
-var game = new Pong(canvas);
+var game;
+var isPlaying = false;
+
+var startButton = document.getElementById('start');
+var pauseButton = document.getElementById('pause');
+var resetButton = document.getElementById('reset');
+
+startButton.addEventListener('click', function (event) {
+  if (!isPlaying) {
+    game = new Pong(canvas);
+    isPlaying = true;
+    startButton.classList.add("disabled");
+    startButton.innerHTML = "Good Luck!";
+    console.log(startButton);
+  }
+});
+
+pauseButton.addEventListener('click', function (event) {
+
+  var velocity_x;
+  var velocity_y;
+
+  if (isPlaying && !paused) {
+
+    velocity_x = game.ball.velocity.x;
+    velocity_y = game.ball.velocity.y;
+    paused = true;
+    pauseButton.innerHTML = "Resume!";
+    game.ball.velocity.x = 0;
+    game.ball.velocity.y = 0;
+    console.log(paused);
+  } else if (isPlaying && paused) {
+    game.ball.velocity.x = 75;
+    game.ball.velocity.y = 75;
+    paused = false;
+    pauseButton.innerHTML = "Pause!";
+    requestAnimationFrame(game.animate);
+
+    console.log(velocity_y);
+    console.log(velocity_x);
+    console.log(game);
+  }
+  console.log(velocity_x);
+});
+
+resetButton.addEventListener('click', function (event) {
+  if (paused) {
+    paused = false;
+    pauseButton.innerHTML = "Pause!";
+    game = new Pong(canvas);
+    game.ball.position.x = canvas.width / 2;
+    game.ball.position.y = canvas.height / 2;
+  } else {
+    game = new Pong(canvas);
+    game.ball.position.x = canvas.width / 2;
+    game.ball.position.y = canvas.height / 2;
+  }
+});
 
 canvas.addEventListener('mousemove', function (event) {
-  game.players[0].position.y = event.offsetY;
+  if (isPlaying) {
+    game.players[0].position.y = event.offsetY;
+  }
 });
 
 /***/ }),
