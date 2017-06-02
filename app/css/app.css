@@ -1,9 +1,17 @@
 .game-area {
   padding-left: 20px;
   padding-right: 20px;
+  background-image: url("../assets/retro_computer.jpg");
 }
 
 .test-text {
   color: green;
   font-size: 24px;
+}
+
+.control-buttons {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }

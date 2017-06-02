@@ -11070,7 +11070,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".game-area {\n  padding-left: 20px;\n  padding-right: 20px;\n}\n\n.test-text {\n  color: green;\n  font-size: 24px;\n}\n", ""]);
+exports.push([module.i, ".game-area {\n  padding-left: 20px;\n  padding-right: 20px;\n  background-image: url(" + __webpack_require__(29) + ");\n}\n\n.test-text {\n  color: green;\n  font-size: 24px;\n}\n\n.control-buttons {\n  text-align: center;\n  display: block;\n  margin: 0 auto;\n  margin-bottom: 10px;\n}\n", ""]);
 
 // exports
 
@@ -13706,6 +13706,12 @@ module.exports = __webpack_require__.p + "node_modules/bootstrap/fonts/glyphicon
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "node_modules/bootstrap/fonts/glyphicons-halflings-regular.woff2";
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "55bae8cc185321625bbef3f74df680ba.jpg";
 
 /***/ })
 /******/ ]);
