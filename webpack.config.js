@@ -16,6 +16,30 @@ module.exports = {
                 query: {
                     presets: ['es2015', 'stage-0']
                 }
+            },
+            {
+                test: /\.css$/,
+                loaders: ['style', 'css']
+            },
+            {
+                test: /\.scss$/,
+                loaders: ['style', 'css', 'postcss', 'sass']
+            },
+            {
+                test: /\.less$/,
+                loaders: ['style', 'css', 'less']
+            },
+            {
+                test: /\.woff$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[path][name].[ext]"
+            },
+            {
+                test: /\.woff2$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff2&name=[path][name].[ext]"
+            },
+            {
+                test: /\.(eot|ttf|svg|gif|png)$/,
+                loader: "file-loader"
             }
         ]
     }
