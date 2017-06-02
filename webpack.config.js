@@ -19,15 +19,15 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loaders: ['style', 'css']
+                loaders: ['style-loader', 'css-loader']
             },
             {
                 test: /\.scss$/,
-                loaders: ['style', 'css', 'postcss', 'sass']
+                loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             },
             {
                 test: /\.less$/,
-                loaders: ['style', 'css', 'less']
+                loaders: ['style-loader', 'css-loader', 'less-loader']
             },
             {
                 test: /\.woff$/,

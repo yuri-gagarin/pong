@@ -1,5 +1,5 @@
 require("bootstrap-webpack");
-
+require('./css/app.css');
 import {Vector, Rectangle, Ball} from "./resources/pongResources";
 
 
