@@ -11060,9 +11060,14 @@ var warningPanel = document.getElementById("warning-panel");
 var confirmReset = document.getElementById("reset-yes");
 var cancelReset = document.getElementById("reset-cancel");
 
+var player1score = document.getElementsByClassName("player-1-score")[0];
+var player2score = document.getElementsByClassName("player-2-score")[0];
+
 startButton.addEventListener('click', function (event) {
 
   if (!isPlaying) {
+    player1score.innerHTML = "0";
+    player2score.innerHTML = "0";
     game = new Pong(canvas);
     isPlaying = true;
     startButton.classList.add("disabled");
@@ -11095,6 +11100,8 @@ confirmReset.addEventListener('click', function (event) {
   paused = false;
   pauseButton.innerHTML = "Pause!";
   warningPanel.classList.add("hidden");
+  player1score.innerHTML = "0";
+  player2score.innerHTML = "0";
   game = new Pong(canvas);
 });
 
@@ -11146,7 +11153,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, ".game-area {\n  padding-left: 20px;\n  padding-right: 20px;\n  background-image: url(" + __webpack_require__(11) + ");\n}\n\n.test-text {\n  color: green;\n  font-size: 24px;\n}\n\n.control-buttons {\n  text-align: center;\n  display: block;\n  margin: 0 auto;\n  margin-bottom: 10px;\n}\n\n.warning-panel {\n  text-align: center;\n  color: #e2dede;\n  display: block;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  border: 1px solid grey;\n  border-radius: 10px 10px 10px 10px;\n  background-color: #70a2a8;\n\n  -webkit-animation-duration: 10s;\n  animation-duration: 10s;\n  -webkit-animation-fill-mode: both;\n  animation-fill-mode: both;\n\n}\n\n@-webkit-keyframes fadeIn {\n      0% {opacity: 0;}\n      100% {opacity: 1;}\n}\n\n@keyframes fadeIn {\n  0% {opacity: 0;}\n  100% {opacity: 1;}\n}\n\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n}\n\n.warning-panel:hover {\n  background-color: #cca090;\n}\n\n.warning-buttons {\n  padding-bottom: 5px;\n}\n\n.scoreboard {\n  display: block;\n  border: 0.5px solid grey;\n  border-radius: 5px;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  margin-top: 10px;\n}\n\n.score {\n  min-height: 20px;\n  min-width: 20px;\n  font-size: 36px;\n  display: inline;\n}\n\n.player-1-score {\n  border: 2px solid grey;\n  border-radius: 5px;\n  margin: 10px 0px 10px 40px;\n  padding: 20px 20px 20px 20px;\n  float: left;\n}\n\n.player-2-score {\n  border: 2px solid grey;\n  border-radius: 5px;\n  margin: 10px 40px 10px 0px;\n  padding: 20px 20px 20px 20px;\n  float: right;\n\n}\n", ""]);
+exports.push([module.i, ".game-body {\n  background-color:#dceae9;\n}\n\n.title-area {\n  background-image: url(" + __webpack_require__(31) + ");\n  background-position: center;\n  background-size: cover;\n  color: white;\n\n}\n\n.game-area {\n  padding-left: 20px;\n  padding-right: 20px;\n  background-image: url(" + __webpack_require__(11) + ");\n  background-position: center;\n  background-size: cover;\n  background-repeat: no-repeat;\n}\n\n.test-text {\n  color: green;\n  font-size: 24px;\n}\n\n.control-buttons {\n  text-align: center;\n  display: block;\n  margin: 0 auto;\n  margin-bottom: 10px;\n}\n\n.warning-panel {\n  text-align: center;\n  color: #e2dede;\n  display: block;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  border: 1px solid grey;\n  border-radius: 10px 10px 10px 10px;\n  background-color: #70a2a8;\n\n  -webkit-animation-duration: 10s;\n  animation-duration: 10s;\n  -webkit-animation-fill-mode: both;\n  animation-fill-mode: both;\n\n}\n\n@-webkit-keyframes fadeIn {\n      0% {opacity: 0;}\n      100% {opacity: 1;}\n}\n\n@keyframes fadeIn {\n  0% {opacity: 0;}\n  100% {opacity: 1;}\n}\n\n.fadeIn {\n  -webkit-animation-name: fadeIn;\n  animation-name: fadeIn;\n}\n\n.warning-panel:hover {\n  background-color: #cca090;\n}\n\n.warning-buttons {\n  padding-bottom: 5px;\n}\n\n.scoreboard {\n  border: 0.5px solid grey;\n  border-radius: 5px;\n  margin: 0 auto;\n  margin-bottom: 10px;\n  margin-top: 10px;\n  background-image: url(" + __webpack_require__(30) + ");\n  background-position: center;\n}\n\n.score {\n  color: white;\n  font-size: 18px;\n  display: inline-block;\n}\n\n.score-1 {\n  margin: 10px 0px 10px 75px;\n  float: left;\n}\n\n.score-2 {\n  margin: 10px 75px 10px 0;\n  float: right;\n}\n\n.player-1-score {\n  color: inherit;\n  border: 2px solid white;\n  font-size: 36px;\n  border-radius: 5px;\n  padding: 10px 20px 10px 20px;\n  float: left;\n}\n\n.player-2-score {\n  color: inherit;\n  border: 2px solid white;\n  font-size: 36px;\n  border-radius: 5px;\n  padding: 10px 20px 10px 20px;\n  float: right;\n\n}\n", ""]);
 
 // exports
 
@@ -13788,6 +13795,18 @@ module.exports = __webpack_require__.p + "node_modules/bootstrap/fonts/glyphicon
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "node_modules/bootstrap/fonts/glyphicons-halflings-regular.woff2";
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "294c543a3a8a8080f8d7668986a201d9.jpg";
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "50448048295d8aa599a824f194422b90.jpg";
 
 /***/ })
 /******/ ]);
