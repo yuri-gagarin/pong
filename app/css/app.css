@@ -15,3 +15,76 @@
   margin: 0 auto;
   margin-bottom: 10px;
 }
+
+.warning-panel {
+  text-align: center;
+  color: #e2dede;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  border-radius: 10px 10px 10px 10px;
+  background-color: #70a2a8;
+
+  -webkit-animation-duration: 10s;
+  animation-duration: 10s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+
+}
+
+@-webkit-keyframes fadeIn {
+      0% {opacity: 0;}
+      100% {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.warning-panel:hover {
+  background-color: #cca090;
+}
+
+.warning-buttons {
+  padding-bottom: 5px;
+}
+
+.scoreboard {
+  display: block;
+  border: 0.5px solid grey;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.score {
+  min-height: 20px;
+  min-width: 20px;
+  font-size: 36px;
+  display: inline;
+}
+
+.player-1-score {
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin: 10px 0px 10px 40px;
+  padding: 20px 20px 20px 20px;
+  float: left;
+}
+
+.player-2-score {
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin: 10px 40px 10px 0px;
+  padding: 20px 20px 20px 20px;
+  float: right;
+
+}

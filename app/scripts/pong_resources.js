@@ -29,6 +29,17 @@ export class Rectangle {
   }
 }
 
+
+export class Player extends  Rectangle {
+
+  constructor(score) {
+    super(10, 60);
+    this.score = score;
+  }
+
+}
+
+
 export class Ball extends Rectangle {
   constructor() {
     super(10, 10);

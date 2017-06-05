@@ -6,21 +6,44 @@
   <head>
   <body>
     <div class="container">
+
       <div class='jumbotron'>
         <h1 class="text-center">Pong!</h1>
       </div>
+
+      <div class="row scoreboard">
+        <div class="score player-1-score">1</div>
+        <div class="score player-2-score">2</div>
+      </div>
+
       <div class="row control-buttons">
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" href="./app/html/rules_modal.html" data-target="#myModal">View Rules</button>
-        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" href="./app/html/about_modal.html" data-target="#myModal">About</button>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" href="./app/html/rules_modal.html" data-target="#rulesModal">View Rules</button>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" href="./app/html/about_modal.html" data-target="#aboutModal">About</button>
         <button type="button" class="btn btn-success btn-lg start-button" id="start" data-toggle="">Start!</button>
         <button type="button" class="btn btn-warning btn-lg pause-button" id="pause" data-toggle="">Pause!</button>
         <button type="button" class="btn btn-danger btn-lg reset-button" id="reset" data-toggle="">Reset!</button>
+      </div>
 
+      <div class="row warning-panel hidden" id="warning-panel">
+          <p>Are you sure? All your progress will be lost!</p>
+          <div class="warning-buttons">
+            <button type="button" class="btn btn-success btn-xs cofirm-reset-button" id="reset-yes" data-toggle="">Yes!</button>
+            <button type="button" class="btn btn-danger btn-xs cancel-reset-button" id="reset-cancel" data-toggle="">No!</button>
+          </div>
       </div>
 
 
+
   <!-- Modal -->
-  <div id="myModal" class="modal fade" role="dialog">
+  <div id="rulesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal content-->
+      </div>
+    </div>
+  </div>
+
+  <div id="aboutModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <!-- Modal content-->
