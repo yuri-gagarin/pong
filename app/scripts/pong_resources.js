@@ -35,6 +35,7 @@ export class Player extends  Rectangle {
   constructor() {
     super(10, 60);
     this.score = 0;
+    this.velocity = new Vector;
   }
 
 }

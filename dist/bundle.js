@@ -10847,6 +10847,7 @@ var Player = exports.Player = function (_Rectangle) {
     var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, 10, 60));
 
     _this.score = 0;
+    _this.velocity = new Vector();
     return _this;
   }
 
@@ -10927,6 +10928,9 @@ __webpack_require__(6);
 var canvas = document.getElementById("pong");
 var context = canvas.getContext('2d');
 
+var player1score = document.getElementsByClassName("player-1-score")[0];
+var player2score = document.getElementsByClassName("player-2-score")[0];
+
 //checks of the game is paused.
 var paused = false;
 
@@ -10941,6 +10945,8 @@ var Pong = function () {
 
     //two player paddles
     this.players = [new _pong_resources.Player(), new _pong_resources.Player()];
+    this.players[1].velocity.x = 0;
+    this.players[1].velocity.y = 25;
 
     this.players[0].position.x = 10;
     this.players[0].position.y = this.canvas.height / 2;
@@ -10999,7 +11005,8 @@ var Pong = function () {
     key: "collideWithPaddle",
     value: function collideWithPaddle(paddle, ball) {
       if (paddle.leftEnd < ball.rightEnd && paddle.rightEnd > ball.leftEnd && paddle.topEnd < ball.bottomEnd && paddle.bottomEnd > ball.topEnd) {
-        ball.velocity.x = -ball.velocity.x;
+        ball.velocity.x = -ball.velocity.x * 1.05;
+        ball.velocity.y = ball.velocity.y * 1.05;
       }
     }
   }, {
@@ -11033,19 +11040,25 @@ var Pong = function () {
       this.ball.position.y += this.ball.velocity.y * time;
 
       if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
+        //keep a score
         var score = void 0;
+        //if right players scores
         if (this.ball.leftEnd < 0) {
           score = 1;
           this.players[1].score += score;
           score = 0;
+          player2score.innerHTML = this.players[1].score;
           this.nextRound();
           console.log(this.players[1].score);
-        } else if (this.ball.rightEnd > this.canvas.width) {
-          score = 1;
-          this.players[0].score += score;
-          score = 0;
-          console.log(this.players[0].score);
         }
+        //if left player scores
+        else if (this.ball.rightEnd > this.canvas.width) {
+            score = 1;
+            this.players[0].score += score;
+            player1score.innerHTML = this.players[0].score;
+            score = 0;
+            console.log(this.players[0].score);
+          }
         this.ball.velocity.x = -this.ball.velocity.x;
       }
 
@@ -11080,9 +11093,6 @@ var confirmReset = document.getElementById('reset-yes');
 var cancelReset = document.getElementById('reset-cancel');
 
 var warningPanel = document.getElementById("warning-panel");
-
-var player1score = document.getElementsByClassName("player-1-score")[0];
-var player2score = document.getElementsByClassName("player-2-score")[0];
 
 confirmReset.addEventListener('click', function (event) {
 

@@ -6,6 +6,9 @@ import { Vector, Rectangle, Ball, Player } from "./scripts/pong_resources";
 const canvas  = document.getElementById("pong");
 const context = canvas.getContext('2d');
 
+const player1score = document.getElementsByClassName("player-1-score")[0];
+const player2score = document.getElementsByClassName("player-2-score")[0];
+
 
 
 //checks of the game is paused.
@@ -20,6 +23,8 @@ class Pong {
 
     //two player paddles
     this.players = [new Player, new Player];
+    this.players[1].velocity.x = 0;
+    this.players[1].velocity.y = 25;
 
     this.players[0].position.x = 10;
     this.players[0].position.y  = this.canvas.height / 2;
@@ -79,7 +84,8 @@ class Pong {
   collideWithPaddle(paddle, ball) {
     if (paddle.leftEnd < ball.rightEnd && paddle.rightEnd > ball.leftEnd
         && paddle.topEnd < ball.bottomEnd && paddle.bottomEnd > ball.topEnd) {
-          ball.velocity.x = -ball.velocity.x;
+          ball.velocity.x = -ball.velocity.x * 1.05;
+          ball.velocity.y = ball.velocity.y * 1.05;
         }
   }
 
@@ -96,7 +102,6 @@ class Pong {
       this.renderModel(paddle);
     });
 
-
   }
 
   updateGame(time) {
@@ -110,17 +115,22 @@ class Pong {
     this.ball.position.y += this.ball.velocity.y * time;
 
     if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
+      //keep a score
       let score;
+      //if right players scores
       if (this.ball.leftEnd < 0) {
         score  = 1;
         this.players[1].score += score;
         score = 0;
+        player2score.innerHTML = this.players[1].score;
         this.nextRound();
         console.log(this.players[1].score);
       }
+      //if left player scores
       else if(this.ball.rightEnd > this.canvas.width) {
         score = 1;
         this.players[0].score += score;
+        player1score.innerHTML = this.players[0].score;
         score = 0;
         console.log(this.players[0].score);
       }
@@ -158,8 +168,6 @@ const cancelReset = document.getElementById('reset-cancel');
 
 const warningPanel = document.getElementById("warning-panel");
 
-const player1score = document.getElementsByClassName("player-1-score")[0];
-const player2score = document.getElementsByClassName("player-2-score")[0];
 
 
 confirmReset.addEventListener('click', event => {
