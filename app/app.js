@@ -134,12 +134,46 @@ const startButton = document.getElementById('start');
 const pauseButton = document.getElementById('pause');
 const resetButton = document.getElementById('reset');
 
+const confirmReset = document.getElementById('reset-yes');
+const cancelReset = document.getElementById('reset-cancel');
+
 const warningPanel = document.getElementById("warning-panel");
-const confirmReset = document.getElementById("reset-yes");
-const cancelReset = document.getElementById("reset-cancel");
 
 const player1score = document.getElementsByClassName("player-1-score")[0];
 const player2score = document.getElementsByClassName("player-2-score")[0];
+
+
+confirmReset.addEventListener('click', event => {
+
+  paused  = false;
+  pauseButton.innerHTML = "Pause!";
+  warningPanel.classList.add("hidden");
+  player1score.innerHTML = "0";
+  player2score.innerHTML = "0";
+  game = new Pong(canvas);
+
+
+});
+
+cancelReset.addEventListener('click', event => {
+
+  if (paused) {
+    paused = false;
+    pauseButton.innerHTML = "Pause!";
+    warningPanel.classList.add("hidden");
+    requestAnimationFrame(game.animateGame);
+    console.log(this);
+  }
+
+  else {
+    warningPanel.classlikst.add("hidden");
+    requestAnimationFrame(game.animateGame);
+    console.log(this);
+  }
+
+});
+
+
 
 startButton.addEventListener('click', event => {
 
@@ -177,37 +211,6 @@ resetButton.addEventListener('click', event => {
   }
 
 });
-
-confirmReset.addEventListener('click', event => {
-
-  paused  = false;
-  pauseButton.innerHTML = "Pause!";
-  warningPanel.classList.add("hidden");
-  player1score.innerHTML = "0";
-  player2score.innerHTML = "0";
-  game = new Pong(canvas);
-
-
-});
-
-cancelReset.addEventListener('click', event => {
-
-  if (paused) {
-    paused = false;
-    pauseButton.innerHTML = "Pause!";
-    warningPanel.classList.add("hidden");
-    requestAnimationFrame(game.animateGame);
-    console.log(this);
-  }
-
-  else {
-    warningPanel.classlikst.add("hidden");
-    requestAnimationFrame(game.animateGame);
-    console.log(this);
-  }
-
-});
-
 
 
 canvas.addEventListener('mousemove', event => {
