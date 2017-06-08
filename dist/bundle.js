@@ -10841,12 +10841,12 @@ var Rectangle = exports.Rectangle = function () {
 var Player = exports.Player = function (_Rectangle) {
   _inherits(Player, _Rectangle);
 
-  function Player(score) {
+  function Player() {
     _classCallCheck(this, Player);
 
     var _this = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, 10, 60));
 
-    _this.score = score;
+    _this.score = 0;
     return _this;
   }
 
@@ -10927,6 +10927,7 @@ __webpack_require__(6);
 var canvas = document.getElementById("pong");
 var context = canvas.getContext('2d');
 
+//checks of the game is paused.
 var paused = false;
 
 var Pong = function () {
@@ -10959,7 +10960,7 @@ var Pong = function () {
 
     //animate the game
     var animateGame = function animateGame(miliseconds) {
-
+      //if paused === true, animation stops
       if (paused) {
         lastTime = false;
         return;
@@ -10987,6 +10988,12 @@ var Pong = function () {
 
       this.context.fillStyle = "#fff";
       this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
+    }
+  }, {
+    key: "nextRound",
+    value: function nextRound() {
+      this.ball.position.x = this.canvas.width / 2;
+      this.ball.position.y = this.canvas.height / 2;
     }
   }, {
     key: "collideWithPaddle",
@@ -11026,14 +11033,25 @@ var Pong = function () {
       this.ball.position.y += this.ball.velocity.y * time;
 
       if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
+        var score = void 0;
+        if (this.ball.leftEnd < 0) {
+          score = 1;
+          this.players[1].score += score;
+          score = 0;
+          this.nextRound();
+          console.log(this.players[1].score);
+        } else if (this.ball.rightEnd > this.canvas.width) {
+          score = 1;
+          this.players[0].score += score;
+          score = 0;
+          console.log(this.players[0].score);
+        }
         this.ball.velocity.x = -this.ball.velocity.x;
       }
 
       if (this.ball.topEnd < 0 || this.ball.bottomEnd > this.canvas.height) {
         this.ball.velocity.y = -this.ball.velocity.y;
       }
-
-      if (this.ball.position.y < 0 || this.ball.position.y > 400) {}
 
       this.players[1].position.y = this.ball.position.y;
 
@@ -11050,6 +11068,8 @@ var Pong = function () {
 // game element and event listeners
 
 var game = void 0;
+
+//checks if the game is in progress
 var isPlaying = false;
 
 var startButton = document.getElementById('start');

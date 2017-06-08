@@ -8,8 +8,8 @@ const context = canvas.getContext('2d');
 
 
 
-
-var paused = false;
+//checks of the game is paused.
+let paused = false;
 
 class Pong {
 
@@ -40,7 +40,7 @@ class Pong {
 
     //animate the game
     const animateGame = (miliseconds) => {
-
+      //if paused === true, animation stops
       if (paused) {
         lastTime = false;
         return;
@@ -69,6 +69,11 @@ class Pong {
     this.context.fillStyle = "#fff";
     this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
 
+  }
+
+  nextRound () {
+    this.ball.position.x = this.canvas.width / 2;
+    this.ball.position.y = this.canvas.height / 2;
   }
 
   collideWithPaddle(paddle, ball) {
@@ -105,6 +110,20 @@ class Pong {
     this.ball.position.y += this.ball.velocity.y * time;
 
     if (this.ball.leftEnd < 0 || this.ball.rightEnd > this.canvas.width) {
+      let score;
+      if (this.ball.leftEnd < 0) {
+        score  = 1;
+        this.players[1].score += score;
+        score = 0;
+        this.nextRound();
+        console.log(this.players[1].score);
+      }
+      else if(this.ball.rightEnd > this.canvas.width) {
+        score = 1;
+        this.players[0].score += score;
+        score = 0;
+        console.log(this.players[0].score);
+      }
       this.ball.velocity.x = -this.ball.velocity.x;
     }
 
@@ -112,8 +131,6 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     }
 
-    if (this.ball.position.y < 0 || this.ball.position.y > 400) {
-    }
 
     this.players[1].position.y = this.ball.position.y;
 
@@ -128,6 +145,8 @@ class Pong {
 // game element and event listeners
 
 let game;
+
+//checks if the game is in progress
 let isPlaying = false;
 
 const startButton = document.getElementById('start');

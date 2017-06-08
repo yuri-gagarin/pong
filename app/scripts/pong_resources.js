@@ -32,9 +32,9 @@ export class Rectangle {
 
 export class Player extends  Rectangle {
 
-  constructor(score) {
+  constructor() {
     super(10, 60);
-    this.score = score;
+    this.score = 0;
   }
 
 }
