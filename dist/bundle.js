@@ -10996,10 +10996,18 @@ var Pong = function () {
       this.context.fillRect(model.leftEnd, model.topEnd, model.size.x, model.size.y);
     }
   }, {
-    key: "nextRound",
-    value: function nextRound() {
+    key: "resetGame",
+    value: function resetGame() {
       this.ball.position.x = this.canvas.width / 2;
       this.ball.position.y = this.canvas.height / 2;
+      this.ball.velocity.y = 0;
+      this.ball.velocity.x = 0;
+    }
+  }, {
+    key: "nextRound",
+    value: function nextRound() {
+      this.ball.velocity.y = 120;
+      this.ball.velocity.x = 120;
     }
   }, {
     key: "collideWithPaddle",
@@ -11048,15 +11056,16 @@ var Pong = function () {
           this.players[1].score += score;
           score = 0;
           player2score.innerHTML = this.players[1].score;
-          this.nextRound();
+          this.resetGame();
           console.log(this.players[1].score);
         }
         //if left player scores
         else if (this.ball.rightEnd > this.canvas.width) {
             score = 1;
             this.players[0].score += score;
-            player1score.innerHTML = this.players[0].score;
             score = 0;
+            this.resetGame();
+            player1score.innerHTML = this.players[0].score;
             console.log(this.players[0].score);
           }
         this.ball.velocity.x = -this.ball.velocity.x;
@@ -11097,11 +11106,12 @@ var warningPanel = document.getElementById("warning-panel");
 confirmReset.addEventListener('click', function (event) {
 
   paused = false;
-  pauseButton.innerHTML = "Pause!";
+  isPlaying = false;
+
   warningPanel.classList.add("hidden");
-  player1score.innerHTML = "0";
-  player2score.innerHTML = "0";
-  game = new Pong(canvas);
+  pauseButton.innerHTML = "Pause!";
+  startButton.innerHTML = "Start!";
+  startButton.classList.remove("disabled");
 });
 
 cancelReset.addEventListener('click', function (event) {
@@ -11156,6 +11166,10 @@ canvas.addEventListener('mousemove', function (event) {
   if (isPlaying) {
     game.players[0].position.y = event.offsetY;
   }
+});
+
+canvas.addEventListener("click", function (event) {
+  game.nextRound();
 });
 
 /***/ }),

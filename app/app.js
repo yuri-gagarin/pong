@@ -76,9 +76,16 @@ class Pong {
 
   }
 
-  nextRound () {
+  resetGame () {
     this.ball.position.x = this.canvas.width / 2;
     this.ball.position.y = this.canvas.height / 2;
+    this.ball.velocity.y = 0;
+    this.ball.velocity.x = 0;
+  }
+
+  nextRound () {
+    this.ball.velocity.y  = 120;
+    this.ball.velocity.x = 120;
   }
 
   collideWithPaddle(paddle, ball) {
@@ -123,15 +130,16 @@ class Pong {
         this.players[1].score += score;
         score = 0;
         player2score.innerHTML = this.players[1].score;
-        this.nextRound();
+        this.resetGame();
         console.log(this.players[1].score);
       }
       //if left player scores
       else if(this.ball.rightEnd > this.canvas.width) {
         score = 1;
         this.players[0].score += score;
-        player1score.innerHTML = this.players[0].score;
         score = 0;
+        this.resetGame();
+        player1score.innerHTML = this.players[0].score;
         console.log(this.players[0].score);
       }
       this.ball.velocity.x = -this.ball.velocity.x;
@@ -173,12 +181,12 @@ const warningPanel = document.getElementById("warning-panel");
 confirmReset.addEventListener('click', event => {
 
   paused  = false;
-  pauseButton.innerHTML = "Pause!";
-  warningPanel.classList.add("hidden");
-  player1score.innerHTML = "0";
-  player2score.innerHTML = "0";
-  game = new Pong(canvas);
+  isPlaying = false;
 
+  warningPanel.classList.add("hidden");
+  pauseButton.innerHTML = "Pause!";
+  startButton.innerHTML = "Start!";
+  startButton.classList.remove("disabled");
 
 });
 
@@ -247,3 +255,7 @@ canvas.addEventListener('mousemove', event => {
   }
 
 });
+
+canvas.addEventListener("click", event => {
+  game.nextRound();
+})
